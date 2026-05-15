@@ -17,7 +17,6 @@ Website ini berisi informasi tentang:
 
 - HTML
 - CSS
-- Responsive Design
 - JavaScript (jika ditambahkan pada tahap berikutnya)
 
 ## Tujuan
