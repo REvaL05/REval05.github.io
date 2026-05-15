@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare — Kesehatan Mental Mahasiswa</title>
+    <style>
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #0F172A;
+            --bg-soft: #111C33;
+            --bg-card: #1E293B;
+            --bg-card-light: #24344F;
+            --border: #334155;
+            --text-main: #F8FAFC;
+            --text-muted: #CBD5E1;
+            --text-soft: #94A3B8;
+            --accent: #7DD3FC;
+            --accent-strong: #38BDF8;
+            --accent-soft: rgba(125, 211, 252, 0.12);
+            --shadow: 0 24px 70px rgba(2, 8, 23, 0.35);
+            --radius-lg: 24px;
+            --radius-md: 18px;
+            --radius-sm: 12px;
+            --max-width: 1120px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 34rem),
+                radial-gradient(circle at top right, rgba(14, 165, 233, 0.10), transparent 30rem),
+                var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        .container {
+            width: min(100% - 2rem, var(--max-width));
+            margin-inline: auto;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.85);
+        }
+
+        .nav-inner {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: var(--bg-main);
+            font-size: 1rem;
+            box-shadow: 0 0 28px rgba(125, 211, 252, 0.28);
+        }
+
+        .nav-toggle-input {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 41, 59, 0.85);
+        }
+
+        .nav-toggle-label span,
+        .nav-toggle-label span::before,
+        .nav-toggle-label span::after {
+            content: "";
+            display: block;
+            width: 19px;
+            height: 2px;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: 0.25s ease;
+        }
+
+        .nav-toggle-label span::before {
+            transform: translateY(-7px);
+        }
+
+        .nav-toggle-label span::after {
+            transform: translateY(5px);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.65rem 0.9rem;
+            border-radius: 999px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(125, 211, 252, 0.08);
+        }
+
+        /* === HERO === */
+        .hero {
+            padding: 7.5rem 0 5.5rem;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.12fr 0.88fr;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.3rem;
+            padding: 0.45rem 0.8rem;
+            border: 1px solid rgba(125, 211, 252, 0.24);
+            border-radius: 999px;
+            color: var(--accent);
+            background: rgba(125, 211, 252, 0.08);
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            max-width: 780px;
+            font-size: clamp(2.4rem, 6vw, 4.75rem);
+            line-height: 1.05;
+            letter-spacing: -0.065em;
+            margin-bottom: 1.35rem;
+        }
+
+        .hero-lead {
+            max-width: 700px;
+            font-size: clamp(1.04rem, 1.8vw, 1.22rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            align-items: center;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0.78rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #07111F;
+            box-shadow: 0 18px 36px rgba(56, 189, 248, 0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 44px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            background: rgba(30, 41, 59, 0.68);
+        }
+
+        .btn-secondary:hover {
+            color: var(--accent);
+            border-color: rgba(125, 211, 252, 0.45);
+        }
+
+        .hero-card {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(125, 211, 252, 0.2);
+            border-radius: var(--radius-lg);
+            background:
+                linear-gradient(160deg, rgba(30, 41, 59, 0.98), rgba(17, 28, 51, 0.96)),
+                var(--bg-card);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        .hero-card::before {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            right: -60px;
+            top: -70px;
+            background: rgba(125, 211, 252, 0.16);
+            filter: blur(2px);
+            border-radius: 999px;
+        }
+
+        .hero-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-card h2 {
+            color: var(--accent);
+            font-size: 1.35rem;
+            line-height: 1.35;
+            margin-bottom: 1rem;
+        }
+
+        .hero-card p + p {
+            margin-top: 0.9rem;
+        }
+
+        .calm-note {
+            margin-top: 1.25rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(51, 65, 85, 0.9);
+            color: var(--text-muted);
+        }
+
+        /* === SECTION BASE === */
+        .section {
+            padding: 5rem 0;
+            scroll-margin-top: 92px;
+        }
+
+        .section-header {
+            max-width: 780px;
+            margin: 0 auto 2.4rem;
+            text-align: center;
+        }
+
+        .section-kicker {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.7rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.9rem, 4vw, 2.85rem);
+            line-height: 1.18;
+            letter-spacing: -0.045em;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.04rem;
+        }
+
+        .text-panel {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: rgba(30, 41, 59, 0.62);
+            padding: clamp(1.35rem, 3vw, 2rem);
+            box-shadow: 0 18px 44px rgba(2, 8, 23, 0.18);
+        }
+
+        .text-panel p + p {
+            margin-top: 1rem;
+        }
+
+        /* === CARDS === */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .card-grid.two {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .card {
+            height: 100%;
+            padding: 1.6rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(51, 65, 85, 0.94);
+            background:
+                linear-gradient(180deg, rgba(36, 52, 79, 0.78), rgba(30, 41, 59, 0.9));
+            box-shadow: 0 14px 34px rgba(2, 8, 23, 0.16);
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 1.35rem;
+        }
+
+        .card h3 {
+            font-size: 1.18rem;
+            line-height: 1.35;
+            margin-bottom: 0.65rem;
+        }
+
+        .card p {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+        }
+
+        .card p + p {
+            margin-top: 0.8rem;
+        }
+
+        .wide-card {
+            grid-column: span 2;
+        }
+
+        /* === PROBLEM SECTION === */
+        .problem-layout {
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: 1.2rem;
+            align-items: stretch;
+        }
+
+        .problem-highlight {
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            background:
+                linear-gradient(160deg, rgba(56, 189, 248, 0.12), transparent 48%),
+                rgba(30, 41, 59, 0.86);
+            box-shadow: var(--shadow);
+        }
+
+        .problem-highlight h3 {
+            font-size: 1.6rem;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        .problem-highlight p + p {
+            margin-top: 1rem;
+        }
+
+        .mini-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        /* === BURNOUT === */
+        .burnout-note {
+            margin-top: 1.2rem;
+            padding: 1.2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(125, 211, 252, 0.26);
+            background: rgba(125, 211, 252, 0.08);
+        }
+
+        /* === SOLUSI === */
+        .solution-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .solution-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1rem;
+            padding: 1.4rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(51, 65, 85, 0.95);
+            background: rgba(30, 41, 59, 0.72);
+        }
+
+        .solution-number {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 900;
+        }
+
+        .solution-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .solution-item p + p {
+            margin-top: 0.75rem;
+        }
+
+        /* === HELP === */
+        .help-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .help-callout {
+            padding: 1.6rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(125, 211, 252, 0.24);
+            background: rgba(125, 211, 252, 0.08);
+        }
+
+        .help-callout h3 {
+            margin-bottom: 0.65rem;
+            color: var(--accent);
+        }
+
+        .contact-card {
+            padding: 1.6rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            background: rgba(30, 41, 59, 0.78);
+        }
+
+        .contact-card h3 {
+            margin-bottom: 0.65rem;
+        }
+
+        .contact-card p + p {
+            margin-top: 0.8rem;
+        }
+
+        /* === CLOSING === */
+        .closing-card {
+            position: relative;
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: clamp(1.7rem, 4vw, 3rem);
+            border-radius: 30px;
+            border: 1px solid rgba(125, 211, 252, 0.25);
+            background:
+                radial-gradient(circle at top right, rgba(125, 211, 252, 0.16), transparent 18rem),
+                linear-gradient(180deg, rgba(30, 41, 59, 0.94), rgba(17, 28, 51, 0.96));
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .closing-card h2 {
+            font-size: clamp(1.8rem, 4vw, 2.7rem);
+            line-height: 1.18;
+            letter-spacing: -0.045em;
+            margin-bottom: 1rem;
+        }
+
+        .closing-card p {
+            max-width: 720px;
+            margin-inline: auto;
+            font-size: 1.05rem;
+        }
+
+        .closing-card p + p {
+            margin-top: 1rem;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            padding: 2.7rem 0;
+            border-top: 1px solid rgba(51, 65, 85, 0.86);
+            background: rgba(15, 23, 42, 0.75);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .footer p {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+        }
+
+        .footer-warning {
+            color: var(--text-muted) !important;
+            margin-bottom: 0.6rem;
+        }
+
+        .footer-credit {
+            text-align: right;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 980px) {
+            .hero-grid,
+            .problem-layout,
+            .help-box,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 5.2rem;
+            }
+
+            .hero-card {
+                max-width: 720px;
+            }
+
+            .card-grid,
+            .card-grid.two {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .wide-card {
+                grid-column: span 1;
+            }
+
+            .footer-credit {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .nav-toggle-label {
+                display: inline-flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                left: 1rem;
+                right: 1rem;
+                top: 78px;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: 18px;
+                background: rgba(15, 23, 42, 0.98);
+                box-shadow: var(--shadow);
+            }
+
+            .nav-toggle-input:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .nav-links a {
+                width: 100%;
+                border-radius: 12px;
+            }
+
+            .card-grid,
+            .card-grid.two,
+            .mini-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3.8rem 0;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+            }
+
+            .solution-item {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .container {
+                width: min(100% - 1.2rem, var(--max-width));
+            }
+
+            .hero-card,
+            .problem-highlight,
+            .text-panel,
+            .card,
+            .solution-item,
+            .help-callout,
+            .contact-card,
+            .closing-card {
+                border-radius: 18px;
+            }
+
+            .hero {
+                padding-top: 4.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" aria-label="Navigasi utama">
+        <div class="container nav-inner">
+            <a href="#beranda" class="nav-brand" aria-label="MindCare beranda">
+                <span class="brand-mark">M</span>
+                <span>MindCare</span>
+            </a>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-label="Buka atau tutup menu navigasi">
+            <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true">
+                <span></span>
+            </label>
+
+            <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#masalah">Masalah</a></li>
+                <li><a href="#burnout">Burnout</a></li>
+                <li><a href="#solusi">Solusi</a></li>
+                <li><a href="#bantuan">Bantuan</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="beranda" class="hero">
+        <div class="container hero-grid">
+            <div>
+                <div class="eyebrow">Ruang edukasi kesehatan mental mahasiswa</div>
+                <h1>Menjaga kesehatan mental adalah bagian penting dari perjalanan kuliah.</h1>
+                <p class="hero-lead">
+                    MindCare membantu mahasiswa memahami tekanan akademik, mengenali tanda burnout, dan mengambil langkah sederhana untuk menjaga energi diri. Website ini tidak meminta kamu menjadi sempurna. Tujuannya adalah membantu kamu lebih sadar, lebih tenang, dan lebih berani meminta bantuan saat diperlukan.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn-primary" href="#masalah">Mulai membaca</a>
+                    <a class="btn-secondary" href="#bantuan">Kapan perlu bantuan?</a>
+                </div>
+            </div>
+
+            <aside class="hero-card" aria-label="Pesan pengantar MindCare">
+                <div class="hero-card-content">
+                    <h2>Kuliah bisa berat, tetapi kamu tidak harus memikul semuanya sendirian.</h2>
+                    <p>
+                        Banyak mahasiswa tampak baik-baik saja dari luar, padahal sedang berusaha keras menghadapi tugas, organisasi, ekspektasi keluarga, masalah pertemanan, dan ketidakpastian masa depan. Tekanan seperti ini wajar terasa melelahkan.
+                    </p>
+                    <p>
+                        Mengenali kondisi diri sejak awal membantu kamu mengambil jeda sebelum tubuh dan pikiran benar-benar kehabisan energi.
+                    </p>
+                    <div class="calm-note">
+                        Pelan-pelan juga tetap maju. Istirahat bukan tanda malas, melainkan bagian dari cara tubuh menjaga keseimbangan.
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section Permasalahan -->
+        <section id="masalah" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-kicker">Masalah mahasiswa</div>
+                    <h2 class="section-title">Tekanan kuliah sering muncul dari banyak arah sekaligus.</h2>
+                    <p class="section-subtitle">
+                        Masalah kesehatan mental mahasiswa tidak selalu terlihat dramatis. Kadang bentuknya adalah rasa lelah yang tidak hilang, sulit fokus, mudah cemas, atau merasa tertinggal meskipun sudah berusaha.
+                    </p>
+                </div>
+
+                <div class="problem-layout">
+                    <article class="problem-highlight">
+                        <h3>Memahami masalah adalah langkah awal untuk merawat diri.</h3>
+                        <p>
+                            Mahasiswa sering berada dalam fase transisi. Di satu sisi, mereka dituntut mandiri, berprestasi, aktif, dan mampu mengatur masa depan. Di sisi lain, tidak semua mahasiswa memiliki dukungan, waktu istirahat, atau keterampilan mengelola stres yang cukup.
+                        </p>
+                        <p>
+                            Ketika tekanan akademik bertemu dengan masalah pribadi, ekonomi, relasi sosial, atau tuntutan organisasi, pikiran dapat terasa penuh. Kondisi ini bukan berarti kamu lemah. Itu adalah tanda bahwa tubuh dan pikiran sedang meminta perhatian.
+                        </p>
+                    </article>
+
+                    <div class="mini-grid">
+                        <article class="card">
+                            <div class="card-icon">📚</div>
+                            <h3>Tugas dan deadline menumpuk</h3>
+                            <p>
+                                Tugas dari beberapa mata kuliah dapat datang bersamaan. Jika tidak dikelola, mahasiswa mudah merasa dikejar-kejar, kehilangan arah, dan akhirnya menunda pekerjaan karena terlalu bingung harus mulai dari mana.
+                            </p>
+                        </article>
+
+                        <article class="card">
+                            <div class="card-icon">🌀</div>
+                            <h3>Overthinking tentang nilai dan masa depan</h3>
+                            <p>
+                                Memikirkan masa depan itu wajar, tetapi pikiran yang terus berputar tanpa jeda bisa menguras energi. Overthinking sering membuat mahasiswa sulit tidur, sulit mengambil keputusan, dan merasa tidak pernah cukup baik.
+                            </p>
+                        </article>
+
+                        <article class="card">
+                            <div class="card-icon">🤝</div>
+                            <h3>Tekanan sosial dan perbandingan diri</h3>
+                            <p>
+                                Melihat teman terlihat produktif, cepat lulus, aktif organisasi, atau mendapat pencapaian tertentu dapat memicu rasa tertinggal. Padahal, setiap mahasiswa memiliki proses, kondisi, dan beban yang tidak selalu terlihat.
+                            </p>
+                        </article>
+
+                        <article class="card">
+                            <div class="card-icon">🌙</div>
+                            <h3>Pola tidur dan istirahat yang terganggu</h3>
+                            <p>
+                                Begadang mungkin terasa seperti solusi sementara, tetapi jika menjadi kebiasaan, tubuh akan semakin sulit memulihkan energi. Kurang tidur dapat memperburuk konsentrasi, emosi, daya ingat, dan daya tahan tubuh.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Burnout -->
+        <section id="burnout" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-kicker">Kenali burnout</div>
+                    <h2 class="section-title">Burnout bukan sekadar capek biasa.</h2>
+                    <p class="section-subtitle">
+                        Burnout adalah kondisi kelelahan yang muncul setelah seseorang terlalu lama berada dalam tekanan tanpa pemulihan yang cukup. Pada mahasiswa, burnout sering berkaitan dengan tuntutan akademik, ekspektasi diri, dan kurangnya waktu istirahat.
+                    </p>
+                </div>
+
+                <div class="card-grid">
+                    <article class="card">
+                        <div class="card-icon">🏋️</div>
+                        <h3>Tanda fisik</h3>
+                        <p>
+                            Secara fisik, burnout dapat terasa seperti tubuh yang selalu lelah meskipun sudah tidur, kepala sering terasa berat, otot tegang, nafsu makan berubah, atau tubuh lebih mudah sakit. Sinyal fisik ini penting diperhatikan karena tubuh sering memberi tanda lebih dulu sebelum pikiran benar-benar sadar bahwa ada beban berlebih.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">💙</div>
+                        <h3>Tanda emosional</h3>
+                        <p>
+                            Secara emosional, burnout dapat membuat mahasiswa merasa kosong, mudah tersinggung, kehilangan semangat, atau merasa tidak ada hal yang cukup menyenangkan. Perasaan seperti ini tidak selalu muncul karena kurang bersyukur, melainkan bisa menjadi tanda bahwa energi mental sedang menipis.
+                        </p>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🎓</div>
+                        <h3>Tanda akademik</h3>
+                        <p>
+                            Dalam kegiatan akademik, burnout dapat terlihat dari menurunnya konsentrasi, semakin sering menunda tugas, sulit memahami materi, enggan masuk kelas, atau merasa cemas setiap kali membuka tugas. Jika dibiarkan, kondisi ini dapat membuat mahasiswa semakin menjauh dari aktivitas yang sebenarnya perlu diselesaikan.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="burnout-note">
+                    <p>
+                        Mengenali burnout sejak awal membantu kamu mengambil langkah pencegahan. Kamu tidak perlu menunggu sampai benar-benar tidak sanggup. Saat tubuh, emosi, dan aktivitas akademik mulai berubah secara konsisten, itu sudah cukup menjadi alasan untuk berhenti sejenak dan menata ulang ritme hidup.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Solusi -->
+        <section id="solusi" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-kicker">Solusi edukatif</div>
+                    <h2 class="section-title">Merawat kesehatan mental dimulai dari langkah kecil yang realistis.</h2>
+                    <p class="section-subtitle">
+                        Tidak semua masalah selesai hanya dengan satu tips sederhana. Namun, kebiasaan kecil yang dilakukan secara konsisten dapat membantu mahasiswa merasa lebih terarah dan tidak terlalu tenggelam dalam tekanan.
+                    </p>
+                </div>
+
+                <div class="solution-list">
+                    <article class="solution-item">
+                        <div class="solution-number">01</div>
+                        <div>
+                            <h3>Mengelola waktu dengan cara yang manusiawi</h3>
+                            <p>
+                                Manajemen waktu bukan berarti mengisi seluruh hari dengan aktivitas produktif. Manajemen waktu yang sehat justru membantu kamu mengetahui mana tugas yang perlu dikerjakan lebih dulu, mana yang bisa dijadwalkan nanti, dan kapan tubuh perlu berhenti. Membuat rencana sederhana harian dapat mengurangi rasa kacau karena pikiran tidak perlu terus-menerus mengingat semua hal sekaligus.
+                            </p>
+                            <p>
+                                Mulailah dari tiga prioritas utama dalam satu hari. Cara ini lebih realistis dibanding membuat daftar panjang yang akhirnya menimbulkan rasa bersalah ketika tidak semuanya selesai.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="solution-item">
+                        <div class="solution-number">02</div>
+                        <div>
+                            <h3>Memberi ruang untuk istirahat dan tidur cukup</h3>
+                            <p>
+                                Istirahat adalah kebutuhan dasar, bukan hadiah setelah semua tugas selesai. Otak membutuhkan tidur untuk memproses informasi, menjaga konsentrasi, dan mengatur emosi. Ketika mahasiswa terus memaksa diri tanpa tidur yang cukup, tugas mungkin tetap selesai, tetapi kualitas berpikir dan kestabilan emosi bisa menurun.
+                            </p>
+                            <p>
+                                Cobalah membuat rutinitas malam yang lebih tenang, seperti mengurangi layar beberapa waktu sebelum tidur, merapikan meja belajar, atau menulis hal yang perlu dilakukan besok agar pikiran tidak terlalu penuh saat beristirahat.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="solution-item">
+                        <div class="solution-number">03</div>
+                        <div>
+                            <h3>Membatasi overthinking dengan mengembalikan fokus ke hal yang bisa dikendalikan</h3>
+                            <p>
+                                Overthinking sering muncul karena pikiran mencoba menyelesaikan terlalu banyak kemungkinan sekaligus. Saat kamu merasa cemas tentang nilai, masa depan, atau pendapat orang lain, coba pisahkan antara hal yang bisa kamu kendalikan dan hal yang belum bisa kamu pastikan. Fokus pada langkah terdekat biasanya lebih membantu daripada memaksa diri menjawab semua ketakutan dalam satu waktu.
+                            </p>
+                            <p>
+                                Menulis pikiran di jurnal, berbicara dengan teman yang dipercaya, atau mengambil jeda napas beberapa menit dapat membantu pikiran menjadi lebih tertata.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="solution-item">
+                        <div class="solution-number">04</div>
+                        <div>
+                            <h3>Menjaga relasi sosial yang mendukung</h3>
+                            <p>
+                                Mahasiswa sering merasa harus kuat sendirian, padahal dukungan sosial dapat membantu menurunkan beban emosional. Berbicara dengan teman, keluarga, dosen pembimbing, atau komunitas yang aman dapat membuat masalah terasa lebih ringan karena kamu tidak lagi menyimpannya sendirian.
+                            </p>
+                            <p>
+                                Relasi yang sehat bukan hanya tempat bercerita, tetapi juga tempat untuk merasa diterima. Pilihlah lingkungan yang tidak terus-menerus membuatmu merasa dibandingkan, dihakimi, atau dipaksa melampaui batas diri.
+                            </p>
+                        </div>
+                    </article>
+
+                    <article class="solution-item">
+                        <div class="solution-number">05</div>
+                        <div>
+                            <h3>Mencari bantuan profesional saat beban terasa terlalu berat</h3>
+                            <p>
+                                Meminta bantuan profesional bukan berarti kamu gagal menyelesaikan masalah. Konselor, psikolog, psikiater, atau layanan konseling kampus dapat membantu kamu memahami kondisi dengan lebih jelas dan menemukan strategi yang sesuai. Bantuan profesional menjadi penting ketika masalah mulai mengganggu tidur, makan, kuliah, relasi, atau keamanan diri.
+                            </p>
+                            <p>
+                                Semakin cepat bantuan dicari, semakin besar peluang untuk mencegah kondisi memburuk. Kamu berhak mendapatkan dukungan yang aman, serius, dan tidak menghakimi.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Bantuan -->
+        <section id="bantuan" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-kicker">Mencari bantuan</div>
+                    <h2 class="section-title">Kapan mahasiswa perlu mencari bantuan?</h2>
+                    <p class="section-subtitle">
+                        Tidak semua rasa sedih atau stres berarti darurat. Namun, ada kondisi tertentu yang sebaiknya tidak dihadapi sendirian, terutama jika berlangsung lama atau mulai mengganggu kehidupan sehari-hari.
+                    </p>
+                </div>
+
+                <div class="text-panel">
+                    <p>
+                        Kamu perlu mempertimbangkan mencari bantuan ketika rasa cemas, sedih, marah, kosong, atau lelah terasa menetap dan sulit dikendalikan. Bantuan juga penting ketika kamu mulai menarik diri dari orang lain, kehilangan minat pada hal yang biasanya disukai, sulit menjalankan kuliah, atau merasa tidak sanggup menghadapi hari-hari berikutnya.
+                    </p>
+                    <p>
+                        Jika muncul pikiran untuk menyakiti diri sendiri, merasa hidup tidak layak dilanjutkan, atau merasa tidak aman, segera hubungi orang terdekat dan layanan bantuan darurat. Dalam kondisi seperti ini, keselamatan diri harus menjadi prioritas utama.
+                    </p>
+                </div>
+
+                <div class="help-box">
+                    <article class="help-callout">
+                        <h3>Mulai dari lingkungan terdekat</h3>
+                        <p>
+                            Kamu bisa menghubungi konselor kampus, dosen pembimbing akademik, wali kelas, bagian kemahasiswaan, teman yang dipercaya, atau keluarga. Pilih orang yang membuatmu merasa aman untuk bercerita dan dapat membantumu mengambil langkah berikutnya.
+                        </p>
+                    </article>
+
+                    <article class="contact-card">
+                        <h3>Rujukan bantuan</h3>
+                        <p>
+                            Untuk dukungan profesional, cari layanan konseling kampus, psikolog, psikiater, puskesmas, rumah sakit, atau layanan kesehatan mental resmi di daerahmu.
+                        </p>
+                        <p>
+                            Jika keadaan terasa darurat, segera hubungi layanan darurat setempat atau minta orang terdekat menemanimu mencari bantuan langsung.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Penutup -->
+        <section class="section" aria-labelledby="penutup-title">
+            <div class="container">
+                <div class="closing-card">
+                    <h2 id="penutup-title">Kamu boleh berjalan pelan, selama kamu tidak ditinggalkan sendirian.</h2>
+                    <p>
+                        Masa kuliah memang bisa menjadi fase yang menantang. Ada hari ketika kamu merasa mampu, ada juga hari ketika hal sederhana terasa berat. Keduanya manusiawi. Nilai, tugas, dan pencapaian penting, tetapi kesehatan dirimu juga penting.
+                    </p>
+                    <p>
+                        Semoga MindCare menjadi pengingat bahwa kamu layak beristirahat, layak didengar, dan layak mendapatkan bantuan ketika membutuhkannya.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <p class="footer-warning">
+                    <strong>Catatan penting:</strong> Website ini bersifat edukatif dan bukan pengganti diagnosis, konseling, terapi, atau bantuan profesional dari tenaga kesehatan mental.
+                </p>
+                <p>
+                    Jika kamu mengalami tekanan mental yang berat, berlangsung lama, atau membahayakan keselamatan diri, segera hubungi tenaga profesional, layanan kesehatan, atau orang terdekat yang dapat membantu.
+                </p>
+            </div>
+            <p class="footer-credit">
+                &copy; 2026 MindCare<br>
+                Edukasi kesehatan mental mahasiswa
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
