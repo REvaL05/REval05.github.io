@@ -25,11 +25,14 @@ Meningkatkan kesadaran mahasiswa terhadap pentingnya menjaga kesehatan mental, m
 
 ## Anggota Kelompok
 
-1. [NIM] — [Nama Anggota 1]  
-2. [NIM] — [Nama Anggota 2]  
-3. [NIM] — [Nama Anggota 3]  
-4. [NIM] — [Nama Anggota 4]  
-5. [NIM] — [Nama Anggota 5]  
+1. G1A025006 — Syafira Syifa Arianita
+2. G1A025015 — Mario Andiko Dwi Saputra
+3. G1A025024 — Keysa Angel Anandita
+4. G1A025029 — Andrian Revaldo
+5. G1A025041 — Daifullah Haffizh Farrash
+6. G1A025055 — Atiqah Najla Fadhilah Rachman
+7. G1A025066 — Alysa Kirana Desmaha Rani
+8. G1A025083 — Alfa Bagus Saputra
 
 ## Cara Menjalankan
 
